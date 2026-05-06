@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { useAuthStore } from '../../stores/auth'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink, RouterView } from 'vue-router'
 
 const authStore = useAuthStore()
 const router = useRouter()
 
 const handleLogout = async () => {
-  await authStore.logout()
-  router.push('/login')
+  try {
+    await authStore.logout()
+  } catch (e) {
+    // still redirect even if logout API fails
+  } finally {
+    router.push('/login')
+  }
 }
 </script>
 
@@ -26,7 +31,7 @@ const handleLogout = async () => {
               </span>
               <button
                 @click="handleLogout"
-                class="px-3 py-1 border rounded text-sm hover:bg-gray-100"
+                class="px-3 py-1 border rounded text-sm hover:bg-gray-100 cursor-pointer"
               >
                 Logout
               </button>
