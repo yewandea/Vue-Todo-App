@@ -111,6 +111,9 @@ const openDeleteModal = (task: Task) => {
 const tasks = () => data.value?.data || []
 const totalPages = () => data.value?.meta?.totalPages || 1
 const currentPage = () => data.value?.meta?.page || page.value
+const reloadPage = () => {
+  location.reload()
+}
 </script>
 
 <template>
@@ -175,15 +178,7 @@ const currentPage = () => data.value?.meta?.page || page.value
 
     <div v-else-if="error" class="border rounded-lg p-8 text-center">
       <p class="text-red-600">Unable to load tasks. Please try again.</p>
-      <BaseButton
-        @click="
-          () => {
-            ;(window as any).location.reload()
-          }
-        "
-        class="mt-4"
-        >Retry</BaseButton
-      >
+      <BaseButton @click="reloadPage" class="mt-4">Retry</BaseButton>
     </div>
 
     <div v-else class="space-y-4 mb-6">
